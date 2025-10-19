@@ -1,5 +1,5 @@
 :root {
-  --background: #ffffff;
+  --background: #000000;
   --foreground: #171717;
 }
 
@@ -24,6 +24,176 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#title{
+  color: white;
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2.5rem;
+  margin-left: 2%;
+  margin-top: 1%;
+  font-weight: bold;
+  font-style: italic;
+}
+
+div{
+  color:white;
+}
+
+.tabs{
+  --pad: 6px;                 /* 컨테이너 안쪽 여백 */
+  --radius: 999px;            /* 둥근 정도 */
+  --dur: .25s;                /* 애니메이션 시간 */
+
+  position: relative;
+  display: inline-flex;
+}
+
+.hot{
+  position: relative;
+  z-index: 1;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  margin: 0 1rem;
+  font-size: 1.5rem;
+  padding: 1rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: color var(--dur) ease;
+}
+
+.hot.active { color: #0b0b0b; }
+
+.pill{
+  position: absolute;
+  top: var(--pad);
+  bottom: var(--pad);
+  width: calc(50% - var(--pad));
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 10px rgba(255,255,255,.15);
+  transition: left var(--dur) ease, width var(--dur) ease;
+}
+
+#selector{
+  display: flex;
+  justify-content: center;
+  border: 2px solid white;
+  border-radius: 3rem;
+  gap: 1.3rem;
+  margin: 1rem auto 2rem;
+  padding: 0 1%;
+  width: fit-content;
+}
+
+.list_wrapper{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.list{
+  display: flex;
+  flex-wrap: wrap;      /* 줄바꿈 허용 */
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  width: fit-content;
+  margin-bottom: 1rem;
+}
+
+.list span{
+  display: flex;
+  justify-content: center;
+  white-space: nowrap;        /* 줄바꿈 금지 */
+  overflow: hidden;           /* 넘치는 부분 숨기기 */
+  text-overflow: "";    /* ... 처리 */
+  max-width: 200px;           /* span 최대 폭 제한 */
+  border: 2px solid white;
+  padding: 6px 12px;
+  border-radius: 1rem;
+  text-align: left;
+  width: 250px;             /* 가로 고정 */
+  height: 300px;
+}
+
+.hot_item{
+  display: flex;
+  flex-direction: column; /* 세로 방향 정렬 */
+  align-items: center;    /* 가운데 정렬 */
+  text-align: center;     /* 텍스트도 가운데 정렬 */
+  cursor: pointer;
+}
+
+.hot_item:hover{
+  background-color: #444;
+}
+
+.image{
+  width: 180px;
+  height: 180px;
+  object-fit: contain;
+  margin-bottom: 1.5rem;
+  border-radius: 20px;
+}
+
+.title_field{
+
+  padding: 0.9rem 1.4rem;
+  border-radius: 1rem;
+  font-size: 1.2rem;
+}
+
+#Search{
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  margin-bottom: 5rem;
+}
+#Search_bar{
+  display: flex;
+  align-items: center;
+  border: 2px solid white;
+  border-radius: 2rem;
+  height: 4rem;
+  padding: 1rem;
+}
+
+.Search_bt{
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 0;
+  border: 0;
+  width: 4rem;
+  height: 4rem;
+}
+
+.Search_bt img{
+  filter: invert(100%);
+}
+
+.bar{
+  height: 4rem;
+  width: 45rem;
+  font-size: 1.5rem;
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  outline: none;
+  color: white;
+  padding-left: 0.5rem;
+}
+
+#Search_image{
+  width: 3rem;
+  height: 3rem;
+  color: white;
+  cursor: pointer;
+}
+
+.tabs[data-active="0"] .pill { left: var(--pad); }
+.tabs[data-active="1"] .pill { left: calc(48% + var(--pad)); }
+
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -39,4 +209,57 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+@media screen and (max-width: 780px){
+  #title{
+    font-size: 2rem;
+  }
+  .hot{
+    font-size: 0.8rem;
+  }
+  #selector{
+    gap: 1rem;
+  }
+  .list span{
+    justify-content: center;
+    width: 160px;
+    height: 240px;
+  }
+
+  .image{
+    width: 145px;
+    height: 145px;
+    margin-bottom: 1rem;
+  }
+
+  .title_field{
+    padding: 0.2rem 0.4rem;
+    font-size: 1rem;
+  }
+
+  .list{
+    gap: 0.5rem;
+  }
+  .bar{
+    width: 17rem;
+    height: 4rem;
+  }
+  #Search_bar{
+    height: 4rem;
+  }
+
+  .Search_bt{
+    background-color: rgba(0, 0, 0, 0);
+    border-radius: 0;
+    border: 0;
+    width: 4rem;
+    height: 4rem;
+  }
+
+  #Search_image{
+    width: 3rem;
+    height: 3rem;
+  }
+
 }

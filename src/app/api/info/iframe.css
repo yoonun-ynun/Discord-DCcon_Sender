@@ -1,0 +1,125 @@
+.image_list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    flex: 1 1 auto;
+    overflow-y: auto;
+}
+
+#class_doc{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#main{
+    display: flex;              /* 이미지와 텍스트를 가로로 배치 */
+    align-items: center;    /* 위쪽 정렬 (필요에 따라 center 가능) */
+    gap: 10px;                  /*이미지와 텍스트 간격*/
+    margin: 1rem 4.5rem;
+    flex: 0 0 auto;
+}
+
+.info_wrap {
+    display: flex;
+    align-items: center;     /* 텍스트와 버튼을 한 줄에 정렬 */
+    justify-content: space-between;
+    flex: 1;                 /* 남은 공간 차지 */
+}
+
+#main-img{
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.dccon_text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.text_field {
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    width: 70%;
+}
+
+.button_group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#description {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.title_field{
+    padding: 1rem 0;
+    margin-bottom: 3rem;
+}
+
+.btn_download{
+    border: 2px solid mediumturquoise;
+    border-radius: 2rem;
+    width: 10rem;
+    height: 3rem;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.btn_add{
+    border: 2px solid white;
+    border-radius: 2rem;
+    width: 10rem;
+    height: 3rem;
+    cursor: pointer;
+    background-color: black;
+    color: white;
+}
+
+.btn_download:hover {
+    background-color: mediumturquoise;
+    color: black;
+}
+
+.btn_add:hover{
+    background-color: white;
+    color: black;
+}
+
+@media screen and (max-width: 780px){
+    .dccon_img{
+        height: 100px;
+        width: 100px;
+    }
+    #main{
+        margin: 1rem;
+    }
+    .info_wrap {
+        flex-direction: column;      /* 제목/설명과 버튼을 세로로 쌓음 */
+        align-items: flex-start;     /* 왼쪽 정렬 */
+    }
+
+    .button_group {
+        flex-direction: column;       /* 버튼끼리도 세로로 줄바꿈 */
+        width: 100%;
+        gap: 6px;
+    }
+    .btn_download{
+        width: 100%;
+    }
+    .btn_add{
+        width: 100%;
+    }
+    .text_field{
+        width: 100%;
+    }
+}
