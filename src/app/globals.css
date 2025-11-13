@@ -16,6 +16,12 @@ body {
   overflow-x: hidden;
 }
 
+#header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -35,14 +41,93 @@ body {
   font-style: italic;
 }
 
+#Discord_login{
+  width: 12rem;
+  height: 4rem;
+  background-color: rgba(0, 0, 0, 0);
+  color: #5865f2;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 2.3rem;
+  border-color: #5865f2;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#Discord_login:hover{
+  background-color: #5865f2;
+  color: white;
+}
+
+#Discord_logout{
+  width: 9rem;
+  height: 3rem;
+  background-color: rgba(0, 0, 0, 0);
+  color: red;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border-color: red;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#Discord_logout:hover{
+  background-color: red;
+  color: white;
+}
+
+#Discord_login:hover img{
+  filter: brightness(0) invert(1);
+}
+
+#Discord_symbol{
+  width: 2rem;
+  height: 2rem;
+}
+
+.pf_menu_bt{
+  display: flex;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  width: 10rem;
+  height: 3rem;
+  color: white;
+  text-align: left;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.pf_menu_bt:hover{
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#profile_menu{
+  width: 10rem;
+  height: 6rem;
+  display: block;
+}
+
 div{
   color:white;
 }
 
 .tabs{
-  --pad: 6px;                 /* 컨테이너 안쪽 여백 */
-  --radius: 999px;            /* 둥근 정도 */
-  --dur: .25s;                /* 애니메이션 시간 */
+  --pad: 6px;
+  --radius: 999px;
+  --dur: .25s;
 
   position: relative;
   display: inline-flex;
@@ -190,6 +275,36 @@ div{
   cursor: pointer;
 }
 
+.dccon_listing{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.2rem;
+}
+
+.dccon_listing img{
+  width: 50px;
+  height: 50px;
+}
+
+.delete_dccon{
+  background-color: rgba(10, 10, 10, 0);
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  align-content: center;
+  cursor: pointer;
+}
+
+.profile_list{
+  margin: 1rem 0;
+}
+
+.dccon_listing_title{
+  width: 10rem;
+  text-align: center;
+}
+
 .tabs[data-active="0"] .pill { left: var(--pad); }
 .tabs[data-active="1"] .pill { left: calc(48% + var(--pad)); }
 
@@ -260,6 +375,20 @@ a {
   #Search_image{
     width: 3rem;
     height: 3rem;
+  }
+
+  #Discord_login{
+    width: 9rem;
+    height: 3rem;
+    font-size: 1rem;
+  }
+
+  #profile_menu{
+    width: 100%;
+  }
+  .pf_menu_bt{
+    width: 100%;
+    text-align: center;
   }
 
 }

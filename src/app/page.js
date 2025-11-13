@@ -12,7 +12,8 @@ async function day_top(){
     let res = await fetch('https://json2.dcinside.com/json1/dccon_day_top5.php?4&jsoncallback=day_top5', {
         method: 'GET',
         headers: {
-            'referer': 'https://dccon.dcinside.com/'
+            'referer': 'https://dccon.dcinside.com/',
+            'next': { revalidate: 3600 }
         }
     })
     let data = await res.text();
@@ -25,12 +26,13 @@ async function week_top(){
     let res = await fetch('https://json2.dcinside.com/json1/dccon_week_top5.php?1&jsoncallback=week_top5', {
         method: 'GET',
         headers: {
-            'referer': 'https://dccon.dcinside.com/'
+            'referer': 'https://dccon.dcinside.com/',
+            'next': { revalidate: 3600 }
         }
     })
 
     let data = await res.text();
-    var response = data.substring(10, data.length - 1); //JSONP to JSON
+    let response = data.substring(10, data.length - 1); //JSONP to JSON
     response = JSON.parse(response);
     return response;
 }

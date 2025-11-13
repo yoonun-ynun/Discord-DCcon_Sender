@@ -14,7 +14,7 @@ export default async function Page({ searchParams }){
                         <span className={"title_field"}>{data.title}</span><br/>
                         <span id={"description"}>{data.description}</span>
                     </div>
-                    <Button lists={data.path} title={data.title}/>
+                    <Button lists={data.path} title={data.title} idx={idx}/>
                 </div>
             </div>
             <hr/>

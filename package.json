@@ -11,8 +11,11 @@
     "file-saver": "^2.0.5",
     "jsdom": "^27.0.0",
     "jszip": "^3.10.1",
+    "mongoose": "^8.19.2",
     "next": "15.5.5",
+    "next-auth": "^5.0.0-beta.29",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "socket.io": "^4.8.1"
   }
 }

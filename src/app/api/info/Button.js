@@ -2,12 +2,37 @@
 import "./iframe.css"
 import JSZip from "jszip"
 import {saveAs} from "file-saver"
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
-export default function Button({lists, title}){
+export default function Button({lists, title, idx}){
     const [progress, setProgress] = useState(0);
     const [progress_max, setProgress_max] = useState(0);
+    const [isExist, setIsExist] = useState(null);
+    useEffect(() => {
+        fetch("/api/controller", {
+            method: "POST",
+            body: JSON.stringify({idx: idx}),
+            headers:{
+                "Content-Type": "application/json"
+            }
+        }).then((result) => result.json()).then(data => {
+            if(data.success){
+                if(data.isExist){
+                    setIsExist(true);
+                }else{
+                    setIsExist(false);
+                }
+            }else{
+                alert(data.message);
+                setIsExist(true);
+            }
+        }).catch((e) => {
+            alert("유저 정보를 불러오는데 실패하였습니다.");
+            console.error(e);
+            setIsExist(true);
+        })
+    }, [idx])
     const handleZip = async () => {
         console.log("start download");
         const zip = new JSZip();
@@ -32,10 +57,40 @@ export default function Button({lists, title}){
         saveAs(content, `${title}.zip`);
         console.log("saved");
     };
+    const handleAdd = async() => {
+        try {
+            const result = await fetch("/api/controller", {
+                method: "PUT",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({idx: idx}),
+            });
+            const parsed = await result.json();
+            if(!parsed.success){
+                alert(parsed.message);
+                return;
+            }
+            setIsExist(true);
+        }catch(err){
+            alert("디시콘 추가 도중 오류가 발생하였습니다.");
+            console.error(err);
+        }
+    }
+
     return (
         <div className="button_group">
             <button className="btn_download" onClick={handleZip}>다운로드</button>
-            <button className="btn_add">추가</button>
+            {isExist === null && (
+                <button className="btn_added" disabled>확인 중...</button>
+            )}
+
+            {isExist === true && (
+                <button className="btn_added" disabled>이미 추가되었습니다.</button>
+            )}
+
+            {isExist === false && (
+                <button className="btn_add" onClick={handleAdd}>추가</button>
+            )}
+
             {progress > 0 &&
                 <div id={"progress"}>
                     <progress id={"download_progress"} max={progress_max} value={progress}></progress>

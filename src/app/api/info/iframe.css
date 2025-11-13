@@ -85,6 +85,15 @@
     color: white;
 }
 
+.btn_added{
+    border: 2px solid #acacac;
+    border-radius: 2rem;
+    width: 10rem;
+    height: 3rem;
+    background-color: #acacac;
+    color: black;
+}
+
 .btn_download:hover {
     background-color: mediumturquoise;
     color: black;
@@ -117,6 +126,9 @@
         width: 100%;
     }
     .btn_add{
+        width: 100%;
+    }
+    .btn_added{
         width: 100%;
     }
     .text_field{
