@@ -8,7 +8,7 @@ export default function List({Params}){
     const iframe_clicker = (event) =>{
         const el = event.target.closest("[dccon-idx]");
         if (!el) return;
-        setUrl(`/api/info?idx=${el.getAttribute("dccon-idx")}`)
+        setUrl(`/components/info?idx=${el.getAttribute("dccon-idx")}`)
     }
 
     return (
