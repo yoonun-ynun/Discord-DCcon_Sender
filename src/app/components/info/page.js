@@ -3,9 +3,10 @@ import Button from "@/app/components/info/Button";
 import {dccon_info} from "@/lib/fetchDC";
 
 export default async function Page({ searchParams }){
-    const params = await searchParams;
+    const params = await searchParams
     const idx = params.idx;
     const data = await dccon_info(idx);
+
     return (
         <div id={"class_doc"}>
             <div id={"main"}>

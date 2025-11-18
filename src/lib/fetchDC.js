@@ -1,4 +1,6 @@
-import jsdom from "jsdom";
+import { JSDOM } from "jsdom";
+
+
 
 export async function day_top(){
     let res = await fetch('https://json2.dcinside.com/json1/dccon_day_top5.php?4&jsoncallback=day_top5', {
@@ -42,7 +44,7 @@ export async function search(text) {
         result = await result.text();
 
         // JSDOM 파싱 결과를 바로 반환하도록 수정
-        const dom = new jsdom.JSDOM(result);
+        const dom = new JSDOM(result);
 
         // 검색 결과가 없는지 여기서 바로 확인
         if (dom.window.document.querySelector('.dccon_search_none')) {

@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    allowedDevOrigins: ['yoonun.com', '*.yoonun.com']
+    allowedDevOrigins: [process.env.AUTH_URL],
+    productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;

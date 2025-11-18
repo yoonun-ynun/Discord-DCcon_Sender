@@ -9,7 +9,7 @@ export async function listing(list){
         try {
             info = await dccon_info(item);
         }catch(error){
-            info = result.push({success: false, idx: item})
+            result.push({success: false, idx: item})
         }
         result.push(info);
     }
