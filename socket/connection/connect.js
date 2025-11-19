@@ -1,5 +1,5 @@
 import WebSocket from 'ws';
-import {getSequence, sendHeartbeat, setAck, setSequence, stopHeartbeat} from "./heartbeat";
+import {getSequence, sendHeartbeat, setAck, setSequence, stopHeartbeat} from "./heartbeat.js";
 
 let shouldResume = false;
 let pendingSessionId = null;
@@ -13,23 +13,31 @@ export function startSocket(){
         console.log("WebSocket connection opened to Discord");
         isReconnecting = false;
     });
-    socket.on('message', manageSocket);
-    socket.on('close', () => {
-        console.log("WebSocket connection closed");
-        reconnectSocket(true);
-    })
-    socket.on('error', () => {
-        console.log("WebSocket connection error");
-    })
+    handleConnect();
 }
 
 function manageSocket(event){
     const message = JSON.parse(event.toString());
     const command = message.op;
     if(message.s !== null && message.s !== undefined)   setSequence(message.s);
+    if(command === 0){
+        console.log(message.d)
+    }
     if(command === 0 && message.t === "READY"){
         resumeGateway = message.d.resume_gateway_url;
         pendingSessionId = message.d.session_id;
+        socket.send(JSON.stringify({
+            "op": 3,
+            "d": {
+                "since": null,
+                "activities": [{
+                    "name": "봇인 사실을 즐기는 중",
+                    "type": 0
+                }],
+                "status": "online",
+                "afk": false
+            }
+        }))
     }
     if(command === 7){
         reconnectSocket(true);
@@ -101,14 +109,7 @@ function reconnectSocket(isResume){
                 isReconnecting = false;
                 shouldResume = true;
             })
-            socket.on('message', manageSocket);
-            socket.on('close', () => {
-                console.log("WebSocket connection closed");
-                reconnectSocket(true);
-            })
-            socket.on('error', () => {
-                console.log("WebSocket connection error");
-            })
+            handleConnect();
         }else{
             console.log("Reconnect to Discord");
             resumeGateway = null;
@@ -124,12 +125,27 @@ function sendResume(){
         socket.send(JSON.stringify({
             op: 6,
             d: {
-                token: process.env.DISCORD_TOKEN, // Your bot token
-                session_id: pendingSessionId, // The session ID you stored when the bot was last connected
-                seq: getSequence() // The last sequence number received
+                token: process.env.DISCORD_TOKEN,
+                session_id: pendingSessionId,
+                seq: getSequence()
             }
         }));
     }else{
         console.log("Socket is not open, cannot send resume message");
     }
+}
+
+function handleConnect(){
+    socket.on('message', manageSocket);
+    socket.on('close', (code, reason) => {
+        console.log("WebSocket closed:", code, reason.toString());
+        if ([4004, 4010, 4011, 4012, 4013, 4014].includes(code)) {
+            console.error("Fatal gateway close code, check token/intents/privileged settings!");
+            return;
+        }
+        reconnectSocket(true);
+    })
+    socket.on('error', () => {
+        console.log("WebSocket connection error");
+    })
 }

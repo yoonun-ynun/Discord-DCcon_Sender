@@ -3,9 +3,7 @@ let timeout = null;
 let lastAck = true;
 
 export function sendHeartbeat(socket, Interval, onTimeout){
-    if(timeout){
-        clearTimeout(timeout);
-    }
+    stopHeartbeat();
     lastAck = true;
     function send() {
         if (socket.readyState === 1) {

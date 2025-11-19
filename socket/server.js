@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
-import {startSocket} from "./connection/connect";
+import {startSocket} from "./connection/connect.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 mongoose.connect(process.env.MONGO_URI, {
     dbName: "Discord",
