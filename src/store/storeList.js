@@ -1,0 +1,55 @@
+import {create} from "zustand"
+
+export const storeList = create((set, get) => ({
+    List: [],
+    data:{},
+    add: (idx, name, url) => {
+        const {List} = get();
+        if(List.includes(idx))  return;
+        set((state) => {
+            return {
+                List: [...state.List, idx],
+                data: {...state.data, [idx]: {name: name, url: url,}}
+            }
+        })
+        fetchAdd(idx);
+    },
+    remove: (idx) => set((state) => {
+        const new_List = state.List.filter(item => item !== idx);
+        const new_data = {...state.data};
+        delete new_data[idx];
+        return {
+            List: new_List,
+            data: new_data
+        }
+    }),
+    replaceAll: (lists) => {
+        set(() => ({
+            List: lists.map((i) => i.idx),
+            data: Object.fromEntries(lists.map((i) => [i.idx, {name: i.name, url: i.url}]))
+        }))
+    },
+    reset: () => set(() => ({List: [], data: {}}))
+}))
+
+function fetchAdd(idx){
+    fetch("/api/controller", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body:JSON.stringify({idx: idx})
+    }).then(res => {
+        if(!res.ok){
+            throw new Error("Http Error");
+        }
+        return res.json()
+    }).then(res => {
+        if(!res.success){
+            throw new Error("Server Error");
+        }
+    }).catch(err => {
+        console.error(err);
+        storeList.getState().remove(idx);
+    })
+}

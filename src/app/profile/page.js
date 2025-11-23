@@ -5,15 +5,18 @@ import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import {listing} from "./getList"
 import IframeOverlay from "@/app/components/IframeOveray";
+import {useDcconSync} from "@/store/queryList.js";
 
 
 export default function Page(){
+    const {reset} = useDcconSync();
     const router = useRouter()
     const { data: session, status } = useSession()
     const [menu, setMenu] = useState("profile");
 
     useEffect(() => {
         if (status === "unauthenticated") {
+            reset();
             router.replace("/");
         }
     }, [status, router]);
@@ -39,7 +42,7 @@ export default function Page(){
                 {menu === "list" && <ListUp discordId={session.user.disordId}/>}
             </main>
             <span className={"button"} style={{"marginRight": "5%", "display": "flex", "justifyContent": "right"}}>
-                <button id={"Discord_logout"} onClick={() => signOut()}>
+                <button id={"Discord_logout"} onClick={() => {reset();signOut();}}>
                     Sign Out
                 </button>
             </span>
@@ -48,29 +51,21 @@ export default function Page(){
 }
 
 function ListUp(){
-    const [list, setList] = useState(null);
+    const {refetch, List, data, remove} = useDcconSync();
     const [url, setUrl] = useState(null);
-    useEffect(() => {
-        console.log("effect");
-        (async () => {
-            const response = await fetch("api/controller");
-            const json = await response.json();
-            const list = json.list;
-            const info_list = await listing(list);
-            setList(info_list);
-        })()
-    }, [])
 
     function Delete(event){
         const el = event.target.closest("[dccon_idx]");
         if(!el) return;
+        const idx = el.getAttribute("dccon_idx");
         fetch("api/controller",{
             method: "DELETE",
             headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({idx: el.getAttribute("dccon_idx")})
+            body: JSON.stringify({idx: idx})
         }).then((res) => res.json()).then((data) => {
             if(data.success) {
                 alert("삭제에 성공하였습니다");
+                remove(idx);
                 el.parentElement.parentElement.remove();
             }
             else
@@ -89,6 +84,7 @@ function ListUp(){
 
     return (
         <div className={"profile_list"}>
+            <button onClick={() => refetch()}>refresh</button>
             <hr/>
             <div>
                 <div className={"dccon_listing"}>
@@ -96,8 +92,8 @@ function ListUp(){
                 </div>
                 <hr/>
             </div>
-            {list !== null && list.map((item, i) => {
-                return <div key={`dccon${i}`}><div className={"dccon_listing"}><img src={`/api/img?u=${encodeURIComponent(item.main_img)}`} alt={"dccon_img"}/><div className={"dccon_listing_title"} dccon-idx={item.idx} onClick={iframe_clicker} style={{cursor: "pointer"}}>{item.title}</div><button className={"delete_dccon"} dccon_idx={item.idx} onClick={Delete}>X</button></div><hr/></div>
+            {List !== null && List.map((item, i) => {
+                return <div key={`dccon${i}`}><div className={"dccon_listing"}><img src={`/api/img?u=${encodeURIComponent(data[item].url)}`} alt={"dccon_img"}/><div className={"dccon_listing_title"} dccon-idx={data[item].idx} onClick={iframe_clicker} style={{cursor: "pointer"}}>{data[item].name}</div><button className={"delete_dccon"} dccon_idx={data[item].idx} onClick={Delete}>X</button></div><hr/></div>
             })}
             {url && <IframeOverlay url={url} onClose={() => setUrl(null)} />}
         </div>

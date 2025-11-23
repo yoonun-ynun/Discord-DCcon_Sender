@@ -119,7 +119,6 @@ function reconnectSocket(isResume){
 }
 
 function sendResume(){
-    // Send a resume message to Discord to resume the session
     if (socket.readyState === 1) {
         console.log("Sending resume message");
         socket.send(JSON.stringify({
