@@ -3,7 +3,6 @@ import Header from "@/app/Header";
 import {signOut, useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
-import {listing} from "./getList"
 import IframeOverlay from "@/app/components/IframeOveray";
 import {useDcconSync} from "@/store/queryList.js";
 
@@ -39,7 +38,7 @@ export default function Page(){
                     <hr/>
                 </span>
                 {menu === "profile" && profile(session.user.discordId, session.user.image, session.user.name)}
-                {menu === "list" && <ListUp discordId={session.user.disordId}/>}
+                {menu === "list" && <ListUp/>}
             </main>
             <span className={"button"} style={{"marginRight": "5%", "display": "flex", "justifyContent": "right"}}>
                 <button id={"Discord_logout"} onClick={() => {reset();signOut();}}>
@@ -66,7 +65,6 @@ function ListUp(){
             if(data.success) {
                 alert("삭제에 성공하였습니다");
                 remove(idx);
-                el.parentElement.parentElement.remove();
             }
             else
                 alert(data.message);
@@ -93,7 +91,7 @@ function ListUp(){
                 <hr/>
             </div>
             {List !== null && List.map((item, i) => {
-                return <div key={`dccon${i}`}><div className={"dccon_listing"}><img src={`/api/img?u=${encodeURIComponent(data[item].url)}`} alt={"dccon_img"}/><div className={"dccon_listing_title"} dccon-idx={data[item].idx} onClick={iframe_clicker} style={{cursor: "pointer"}}>{data[item].name}</div><button className={"delete_dccon"} dccon_idx={data[item].idx} onClick={Delete}>X</button></div><hr/></div>
+                return <div key={`dccon${i}`}><div className={"dccon_listing"}><img src={`/api/img?u=${encodeURIComponent(data[item].url)}`} alt={"dccon_img"}/><div className={"dccon_listing_title"} dccon-idx={item} onClick={iframe_clicker} style={{cursor: "pointer"}}>{data[item].name}</div><button className={"delete_dccon"} dccon_idx={item} onClick={Delete}>X</button></div><hr/></div>
             })}
             {url && <IframeOverlay url={url} onClose={() => setUrl(null)} />}
         </div>
