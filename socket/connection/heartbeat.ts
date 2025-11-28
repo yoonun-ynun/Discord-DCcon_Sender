@@ -1,8 +1,11 @@
-let sequence = null;
-let timeout = null;
+import WebSocket from "ws";
+import {Opcode} from "./Opcode.js";
+
+let sequence: null | number = null;
+let timeout: null | NodeJS.Timeout = null;
 let lastAck = true;
 
-export function sendHeartbeat(socket, Interval, onTimeout){
+export function sendHeartbeat(socket:WebSocket, Interval:number, onTimeout:() => void){
     stopHeartbeat();
     lastAck = true;
     function send() {
@@ -15,7 +18,7 @@ export function sendHeartbeat(socket, Interval, onTimeout){
             console.log("Sending Heartbeat");
             socket.send(JSON.stringify(
                 {
-                    op: 1,
+                    op: Opcode.HEARTBEAT,
                     d: sequence,
                 }
             ))
@@ -41,7 +44,7 @@ export function stopHeartbeat(){
     }
 }
 
-export function setSequence(s){
+export function setSequence(s: number){
     sequence = s;
 }
 

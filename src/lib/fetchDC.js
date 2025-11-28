@@ -99,7 +99,6 @@ export async function search(text) {
             return [];
         }
 
-        // Promise.all은 순서를 보장하므로, 순서대로 결과를 넣음
         for (const res of pageResults) {
             if (!res) continue; // fetch 실패 등으로 undefined인 경우
 

@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO_URI, {
+if(process.env["MONGO_URI"] === undefined)  throw Error("MONGO_URI is required");
+mongoose.connect(process.env["MONGO_URI"], {
     dbName: "Discord",
 }).then(() => {
     console.log("데이터베이스에 연결되었습니다.");

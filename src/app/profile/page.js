@@ -50,7 +50,7 @@ export default function Page(){
 }
 
 function ListUp(){
-    const {refetch, List, data, remove} = useDcconSync();
+    const {isFetching,refetch, List, data, remove} = useDcconSync();
     const [url, setUrl] = useState(null);
 
     function Delete(event){
@@ -82,7 +82,17 @@ function ListUp(){
 
     return (
         <div className={"profile_list"}>
-            <button onClick={() => refetch()}>refresh</button>
+            {
+                isFetching && (
+                    <button>refreshing...</button>
+                )
+            }
+
+            {
+                !isFetching && (
+                    <button onClick={() => refetch()}>refresh</button>
+                )
+            }
             <hr/>
             <div>
                 <div className={"dccon_listing"}>
