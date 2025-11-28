@@ -49,7 +49,48 @@ export async function createMessage(channel_id: string,body: DiscordMessageBody,
 
 interface DiscordMessageBody{
     content?: string;
-
+    nonce?: string | number;
+    tts?: boolean;
+    embeds?: any[];
+    allowed_mentions?: {
+        parse?: ("users" | "roles" | "everyone")[];
+        roles?: string[];
+        users?: string[];
+        replied_user?: boolean;
+    }
+    message_reference?: {
+        type: 0 | 1;
+        message_id?: string;
+        channel_id?: string;
+        guild_id?: string;
+        fail_if_not_exists?: boolean;
+    }
+    components?: any[];
+    sticker_ids?: string[];
+    enforce_nonce?: boolean;
+    poll?:{
+        question:{
+            text: string;
+        }
+        answers: {
+            answer_id: number;
+            poll_media: {
+                text: string;
+            }
+        }[];
+        /** ISO 8601 timestamp, use Date.toISOString() */
+        expiry: string;
+        allow_multiselect: boolean;
+        layout_type: number;
+        results?:{
+            is_finalized: boolean;
+            answer_counts: {
+                id: number;
+                count: number;
+                me_voted: boolean;
+            }[];
+        }
+    }
 }
 
 interface DiscordMessagePayload extends DiscordMessageBody{

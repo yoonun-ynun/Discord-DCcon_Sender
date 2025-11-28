@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
-    "start": "next start"
+    "build:socket": "tsc -p socket/tsconfig.json",
+    "start": "next start",
+    "start:socket": "node dist/socket/server.js"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.10",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "@types/react": "19.2.7",
     "@types/ws": "^8.18.1",
     "typescript": "^5.9.3"
   }
