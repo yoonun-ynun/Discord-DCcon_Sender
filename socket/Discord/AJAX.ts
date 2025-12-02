@@ -33,12 +33,9 @@ export async function createMessage(channel_id: string,body: DiscordMessageBody,
             ok: true,
             message: await response.json()
         };
-    }catch(e){
+    }catch(e: any){
         console.error(e);
-        let message = "";
-        if(e instanceof Error){
-            message = e.message;
-        }
+        let message = e?.message ?? "";
         return {
             ok: false,
             message: message,

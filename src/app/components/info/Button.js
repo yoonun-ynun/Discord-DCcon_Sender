@@ -3,35 +3,20 @@ import "./iframe.css"
 import JSZip from "jszip"
 import {saveAs} from "file-saver"
 import {useEffect, useState} from "react";
+import {storeList} from "@/store/storeList.js";
 
 
-export default function Button({lists, title, idx}){
+export default function Button({lists, title, idx, main}){
     const [progress, setProgress] = useState(0);
     const [progress_max, setProgress_max] = useState(0);
     const [isExist, setIsExist] = useState(null);
+    const add = storeList(s => s.add);
+    const has = storeList(s => s.has);
     useEffect(() => {
-        fetch("/api/controller", {
-            method: "POST",
-            body: JSON.stringify({idx: idx}),
-            headers:{
-                "Content-Type": "application/json"
-            }
-        }).then((result) => result.json()).then(data => {
-            if(data.success){
-                if(data.isExist){
-                    setIsExist(true);
-                }else{
-                    setIsExist(false);
-                }
-            }else{
-                alert(data.message);
-                setIsExist(true);
-            }
-        }).catch((e) => {
-            alert("유저 정보를 불러오는데 실패하였습니다.");
-            console.error(e);
-            setIsExist(true);
-        })
+        if(has(idx))    setIsExist(true);
+        else{
+            setIsExist(false);
+        }
     }, [idx])
     const handleZip = async () => {
         console.log("start download");
@@ -70,6 +55,7 @@ export default function Button({lists, title, idx}){
                 return;
             }
             setIsExist(true);
+            add(idx, title, main);
         }catch(err){
             alert("디시콘 추가 도중 오류가 발생하였습니다.");
             console.error(err);

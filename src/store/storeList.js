@@ -1,6 +1,7 @@
 import {create} from "zustand"
+import {persist} from "zustand/middleware"
 
-export const storeList = create((set, get) => ({
+export const storeList = create(persist((set, get) => ({
     List: [],
     data:{},
     add: (idx, name, url) => {
@@ -23,6 +24,10 @@ export const storeList = create((set, get) => ({
             data: new_data
         }
     }),
+    has: (idx) => {
+        const {List} = get();
+        return List.includes(idx);
+    },
     replaceAll: (lists) => {
         set(() => ({
             List: lists.map((i) => i.idx),
@@ -30,7 +35,10 @@ export const storeList = create((set, get) => ({
         }))
     },
     reset: () => set(() => ({List: [], data: {}}))
-}))
+})
+,{
+    name: 'dccon-store-list',
+    }))
 
 function fetchAdd(idx){
     fetch("/api/controller", {

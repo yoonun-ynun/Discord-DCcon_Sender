@@ -1,9 +1,12 @@
 "use client"
 import {useState} from "react";
 import IframeOverlay from "@/app/components/IframeOveray";
+import {useDcconSync} from "@/store/queryList.js";
+
 
 export default function List({Params}){
     const [url, setUrl] = useState(null);
+    useDcconSync();
 
     const iframe_clicker = (event) =>{
         const el = event.target.closest("[dccon-idx]");
@@ -18,7 +21,7 @@ export default function List({Params}){
                     {Params.map((item,i) => {
                         return (
                             <span id={`hot_${i}`} className={"hot_item"} dccon-idx={item.idx} onClick={iframe_clicker} key={i}>
-                                    <div><img src={`/api/img?u=${item.img.substring(6)}`} alt={"DCcon image"} className={"image"}/></div>
+                                    <div className={"img-bg"}><img src={`/api/img?u=${item.img.substring(6)}`} alt={"DCcon image"} className={"image"}/></div>
                                     <div className={"title_field"}>{item.title}</div>
                             </span>
                         )

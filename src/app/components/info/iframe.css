@@ -104,6 +104,39 @@
     color: black;
 }
 
+.dccon-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+}
+
+
+.dccon-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.6);
+    transition: opacity 0.3s ease;
+    z-index: 0;
+}
+
+.dccon-real {
+    position: relative;
+    z-index: 1;
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+
+    font-size: 0;
+    color: transparent;
+}
+
+.dccon_img {
+    font-size: 0;
+    color: transparent;
+}
+
 @media screen and (max-width: 780px){
     .dccon_img{
         height: 100px;
