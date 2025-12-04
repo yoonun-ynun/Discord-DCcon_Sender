@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import Discord from "next-auth/providers/discord"
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
+export const { handlers, auth } = NextAuth({
     session: { strategy: "jwt" },
     providers: [
         Discord({
@@ -16,7 +16,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             return token;
         },
         async session({ session, token }) {
-
+            // noinspection JSValidateTypes
             session.user = {
                 ...(session.user ?? {}),
                 ...(token?.discordId ? { discordId: String(token.discordId) } : {}),

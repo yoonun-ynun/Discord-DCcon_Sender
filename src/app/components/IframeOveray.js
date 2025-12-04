@@ -53,7 +53,7 @@ export default function IframeOverlay({ url, onClose }) {
                     width="100%"
                     height="100%"
                     style={{ border: "none" }}
-                    sandbox="allow-scripts allow-forms allow-same-origin allow-downloads"
+                    sandbox="allow-scripts allow-same-origin allow-downloads allow-modals"
                     allow="fullscreen"
                     referrerPolicy="no-referrer"
                 />

@@ -10,7 +10,14 @@ export const Opcode = {
     INVALID_SESSION: 9,
     HELLO: 10,
     HEARTBEAT_ACK: 11,
-    REQUEST_SOUNDBOARD_SOUNDS: 31
+    REQUEST_SOUNDBOARD_SOUNDS: 31,
 } as const;
 
-export type Opcode = typeof Opcode[keyof typeof Opcode]
+export type Opcode = (typeof Opcode)[keyof typeof Opcode];
+
+export interface Message {
+    op: Opcode;
+    d?: any;
+    s?: number;
+    t?: string;
+}

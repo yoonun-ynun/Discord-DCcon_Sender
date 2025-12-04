@@ -19,7 +19,6 @@ export default function Button({lists, title, idx, main}){
         }
     }, [idx])
     const handleZip = async () => {
-        console.log("start download");
         const zip = new JSZip();
         setProgress_max(lists.length);
 
@@ -33,17 +32,15 @@ export default function Button({lists, title, idx, main}){
             }else{
                 zip.file(`${i}.png`, blob);
             }
-            console.log(`zip ${i} successed`);
             setProgress(i+1);
         }
         const content = await zip.generateAsync({ type: "blob" });
-        console.log("generated");
 
         saveAs(content, `${title}.zip`);
-        console.log("saved");
     };
     const handleAdd = async() => {
         try {
+
             const result = await fetch("/api/controller", {
                 method: "PUT",
                 headers: {"Content-Type": "application/json"},

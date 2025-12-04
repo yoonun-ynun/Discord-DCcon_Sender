@@ -357,6 +357,11 @@ a {
     margin-bottom: 1rem;
   }
 
+  .img-bg{
+    width: 145px;
+    height: 145px;
+  }
+
   .title_field{
     padding: 0.2rem 0.4rem;
     font-size: 1rem;

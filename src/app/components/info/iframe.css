@@ -167,4 +167,8 @@
     .text_field{
         width: 100%;
     }
+    .dccon-wrapper{
+        width: 100px;
+        height: 100px;
+    }
 }
