@@ -1,9 +1,11 @@
-export default function Loading(){
-    return(
+export default function Loading() {
+    return (
         <div>
             <div>
-                Now Searching...<br/>Please wait...
+                Now Searching...
+                <br />
+                Please wait...
             </div>
         </div>
-    )
+    );
 }

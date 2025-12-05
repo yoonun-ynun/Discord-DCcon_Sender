@@ -20,7 +20,7 @@ export function startSocket() {
 
 function processQueueSync() {
     while (eventQueue.length > 0) {
-        let temp = eventQueue.shift();
+        const temp = eventQueue.shift();
         if (temp === undefined) continue;
         const message: Message = temp;
         const currentSequence: number = getSequence() ?? 0;
@@ -42,8 +42,8 @@ function manageSocket(event: WebSocket.RawData) {
         processQueueSync();
     }
     if (command === Opcode.DISPATCH && message.t === 'READY') {
-        resumeGateway = message.d.resume_gateway_url;
-        pendingSessionId = message.d.session_id;
+        resumeGateway = (message.d as { resume_gateway_url: string }).resume_gateway_url;
+        pendingSessionId = (message.d as { session_id: string }).session_id;
         socket.send(
             JSON.stringify({
                 op: Opcode.PRESENCE_UPDATE,
@@ -72,10 +72,14 @@ function manageSocket(event: WebSocket.RawData) {
         }
     }
     if (command === Opcode.HELLO) {
-        sendHeartbeat(socket, message.d.heartbeat_interval, () => {
-            console.log('Timed out, Reconnecting..');
-            reconnectSocket(true);
-        });
+        sendHeartbeat(
+            socket,
+            (message.d as { heartbeat_interval: number }).heartbeat_interval,
+            () => {
+                console.log('Timed out, Reconnecting..');
+                reconnectSocket(true);
+            },
+        );
         if (shouldResume && pendingSessionId) {
             sendResume();
             shouldResume = false;

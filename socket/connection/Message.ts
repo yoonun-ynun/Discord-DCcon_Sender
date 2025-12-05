@@ -17,7 +17,7 @@ export type Opcode = (typeof Opcode)[keyof typeof Opcode];
 
 export interface Message {
     op: Opcode;
-    d?: any;
+    d?: Record<string, unknown>;
     s?: number;
     t?: string;
 }

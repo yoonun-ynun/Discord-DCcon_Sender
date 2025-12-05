@@ -33,9 +33,13 @@ export async function createMessage(channel_id: string, body: DiscordMessageBody
             ok: true,
             message: await response.json(),
         };
-    } catch (e: any) {
+    } catch (e: unknown) {
         console.error(e);
-        let message = e?.message ?? '';
+        if (!(e instanceof Error)) {
+            console.log(e);
+            return;
+        }
+        const message = e?.message ?? '';
         return {
             ok: false,
             message: message,
@@ -47,7 +51,7 @@ interface DiscordMessageBody {
     content?: string;
     nonce?: string | number;
     tts?: boolean;
-    embeds?: any[];
+    embeds?: object[];
     allowed_mentions?: {
         parse?: ('users' | 'roles' | 'everyone')[];
         roles?: string[];
@@ -61,7 +65,7 @@ interface DiscordMessageBody {
         guild_id?: string;
         fail_if_not_exists?: boolean;
     };
-    components?: any[];
+    components?: object[];
     sticker_ids?: string[];
     enforce_nonce?: boolean;
     poll?: {

@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 const UserSchema = new Schema({
     user_id: { type: String, required: true, unique: true },
@@ -8,4 +8,4 @@ const UserSchema = new Schema({
 });
 UserSchema.index({ user_id: 1, list: 1 });
 
-export default mongoose.models.User || mongoose.model("User", UserSchema);
+export default mongoose.models.User || mongoose.model('User', UserSchema);
